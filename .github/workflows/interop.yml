@@ -1,0 +1,81 @@
+name: interop
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+env:
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: "1"
+
+jobs:
+  cross-language:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+
+      - name: install fomoxac
+        run: cargo install fomoxac
+
+      # Every peer's src/generated/ is committed, the same convention
+      # fomoxac's own fixtures use - this fails fast if a model changed and
+      # nobody re-ran `fomoxac generate`.
+      - name: the committed rust-peer schema is current
+        working-directory: rust-peer
+        run: fomoxac generate --check
+
+      - name: the committed csharp-peer schema is current
+        working-directory: csharp-peer
+        run: fomoxac generate --check
+
+      - name: the committed go-peer schema is current
+        working-directory: go-peer
+        run: fomoxac generate --check
+
+      - name: the committed c-peer schema is current
+        working-directory: c-peer
+        run: fomoxac generate --check
+
+      - name: the committed cpp-peer schema is current
+        working-directory: cpp-peer
+        run: fomoxac generate --check
+
+      - name: build rust-peer
+        working-directory: rust-peer
+        run: cargo build --release
+
+      - name: build csharp-peer
+        working-directory: csharp-peer
+        run: dotnet build -c Release
+
+      - name: build go-peer
+        working-directory: go-peer
+        run: go build -o go-peer .
+
+      # c-peer and cpp-peer both fetch the fomoxa/c library at configure
+      # time (CMake FetchContent), so they need network access during the
+      # build, same as any dependency pulled from crates.io or NuGet.
+      - name: build c-peer
+        working-directory: c-peer
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build
+
+      - name: build cpp-peer
+        working-directory: cpp-peer
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build
+
+      - name: run the interop matrix
+        run: ./run.sh

@@ -1,0 +1,9 @@
+[package]
+name = "rust-peer"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+fomoxa-net = "0.1.1"
+fomoxa-attributes = "0.1.1"

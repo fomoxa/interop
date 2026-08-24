@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "generator": "fomoxac 0.2.0",
+  "schema_fingerprint": "sha256:7791a1ae074fd09c99ba9e085b6b25c5d14df739d5b73db2d353d761029f5ebc",
+  "sha256_of": "each file with its `// generated-at:` line emptied, so an unchanged schema keeps an unchanged digest",
+  "sources": {
+    "src/models/player.h": {
+      "models": [
+        "Player"
+      ],
+      "outputs": [
+        {
+          "path": "src/generated/player_edge.h",
+          "model": "Player",
+          "codec": "edge",
+          "fingerprint": "sha256:19d8f679a9bb419fad6a11350c111bf9616b8f2e3bf281fb5c9be837216ca2fa",
+          "sha256": "09dd71260f58ec64fd276cca244893b3919eafe58f6873f7d8ecc3d1c500d0d6"
+        }
+      ]
+    }
+  },
+  "shared": [
+    {
+      "path": "src/generated/runtime.h",
+      "kind": "runtime",
+      "sha256": "8fd469f9eb61b63912c15991c99dd0d399f57ff920a3488dd09018257aa9d349"
+    },
+    {
+      "path": "src/generated/arrays.h",
+      "kind": "arrays",
+      "sha256": "66b56d9672e35a242915f9818d9b9998ad96cd9a32c433d45330838d4a74a57c"
+    },
+    {
+      "path": "src/generated/handshake.h",
+      "kind": "handshake",
+      "sha256": "875e6afc89165b7d59b6a96b5a8710825048ac3ef77c185be2863c4b537cca68"
+    }
+  ]
+}
