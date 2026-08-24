@@ -1,0 +1,11 @@
+{
+  "name": "js-peer",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@fomoxa/net": "^0.1.0"
+  }
+}

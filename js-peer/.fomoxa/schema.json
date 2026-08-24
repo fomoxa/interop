@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "generator": "fomoxac 0.2.0",
+  "fingerprint": "sha256:7791a1ae074fd09c99ba9e085b6b25c5d14df739d5b73db2d353d761029f5ebc",
+  "fingerprint_u64": "0x7791A1AE074FD09C",
+  "models": {
+    "Player": {
+      "source": "src/models/player.js",
+      "fingerprint": "sha256:ba355f0228d362801dcf6937b50a61200edd44ab439a9d3a5e8b15a2383b387b",
+      "codecs": [
+        "edge"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "u32",
+          "codecs": [
+            "edge"
+          ]
+        },
+        {
+          "name": "x",
+          "type": "f32",
+          "codecs": [
+            "edge"
+          ]
+        },
+        {
+          "name": "y",
+          "type": "f32",
+          "codecs": [
+            "edge"
+          ]
+        }
+      ],
+      "messages": {
+        "edge": {
+          "id": "0x5AD3FC4F",
+          "fingerprint": "sha256:19d8f679a9bb419fad6a11350c111bf9616b8f2e3bf281fb5c9be837216ca2fa",
+          "fingerprint_u64": "0x19D8F679A9BB419F",
+          "prefixes": [
+            "sha256:9ed3aea54bc5cbd40865209360f5c45597dfd49423a7be8b7cf9194c9e3233dd",
+            "sha256:6962e00c99b909423ecb4cd3d5e8f1e6305752395cca4d244090352b71c8710a",
+            "sha256:19d8f679a9bb419fad6a11350c111bf9616b8f2e3bf281fb5c9be837216ca2fa"
+          ],
+          "prefixes_u64": [
+            "0x9ED3AEA54BC5CBD4",
+            "0x6962E00C99B90942",
+            "0x19D8F679A9BB419F"
+          ],
+          "fields": [
+            {
+              "name": "id",
+              "type": "u32"
+            },
+            {
+              "name": "x",
+              "type": "f32"
+            },
+            {
+              "name": "y",
+              "type": "f32"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

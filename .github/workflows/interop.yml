@@ -24,6 +24,10 @@ jobs:
         with:
           go-version: "1.21"
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: install fomoxac
         run: cargo install fomoxac
 
@@ -48,6 +52,10 @@ jobs:
 
       - name: the committed cpp-peer schema is current
         working-directory: cpp-peer
+        run: fomoxac generate --check
+
+      - name: the committed js-peer schema is current
+        working-directory: js-peer
         run: fomoxac generate --check
 
       - name: build rust-peer
@@ -76,6 +84,10 @@ jobs:
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
           cmake --build build
+
+      - name: build js-peer
+        working-directory: js-peer
+        run: npm install
 
       - name: run the interop matrix
         run: ./run.sh

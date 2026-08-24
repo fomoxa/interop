@@ -11,3 +11,6 @@ go-peer/go-peer
 
 # CMake (c-peer, cpp-peer)
 build/
+
+# Node (js-peer)
+node_modules/
