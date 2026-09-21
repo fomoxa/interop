@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "generator": "fomoxac 0.2.1",
+  "schema_fingerprint": "sha256:b8f0e2543fc9c60d89329c4fa7f31e6f5a0e89600f61f31c1120c5907bfb0b29",
+  "sha256_of": "each file with its `// generated-at:` line emptied, so an unchanged schema keeps an unchanged digest",
+  "sources": {
+    "src/models/echo.rs": {
+      "models": [
+        "CountItem",
+        "CountRequest",
+        "EchoRequest",
+        "EchoResponse"
+      ],
+      "outputs": [
+        {
+          "path": "src/generated/count_item_rpc.rs",
+          "model": "CountItem",
+          "codec": "rpc",
+          "fingerprint": "sha256:a3a551bbfcf90a6c4c485d1dc4aed65525dc983eb0e1013fad1b71b69fa68996",
+          "sha256": "b69c261851f5b46a433e38f4c630fa3e43d25850f427e5325ede856fa15750a6"
+        },
+        {
+          "path": "src/generated/count_request_rpc.rs",
+          "model": "CountRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:12d24dcf758a97691a2e0bfce184b8dc0ef21a8e17a61878efb345ffaefdc671",
+          "sha256": "0ce83e7b495214a451f3fb28815ba1c215e8a559d01bddc5eb711534adf54576"
+        },
+        {
+          "path": "src/generated/echo_request_rpc.rs",
+          "model": "EchoRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:d477f0362150cb3d54936df622045344bffd326620133145fe322aa183b05e15",
+          "sha256": "ea985ed7ff885b089b7133233973d71c52ea7ab161c54490aae7bd96a396a6d4"
+        },
+        {
+          "path": "src/generated/echo_response_rpc.rs",
+          "model": "EchoResponse",
+          "codec": "rpc",
+          "fingerprint": "sha256:23368e8a5e0fca18ae512e3211b9d07a72688126005acf37265ad37b659f65c6",
+          "sha256": "877832a73d0718b3658116ad9051b3f252c4161b3aa2d616e53bea5a0f8042d2"
+        }
+      ]
+    },
+    "src/models/frpc.rs": {
+      "models": [
+        "FRpcCredit",
+        "FRpcCtx",
+        "FRpcError",
+        "FRpcMethodInfo",
+        "FRpcReflectRequest",
+        "FRpcReflectResponse",
+        "FRpcVoid"
+      ],
+      "outputs": [
+        {
+          "path": "src/generated/frpc_credit_rpc.rs",
+          "model": "FRpcCredit",
+          "codec": "rpc",
+          "fingerprint": "sha256:9f3d9aee476f42bdd8ea725b429837c5ebb3a5436604550c2a925ac1cfeb85f4",
+          "sha256": "ea7647d1f09287c7ab13d58b2461dcef8c376e4700b7acc214ae63147114a3e0"
+        },
+        {
+          "path": "src/generated/frpc_ctx_rpc.rs",
+          "model": "FRpcCtx",
+          "codec": "rpc",
+          "fingerprint": "sha256:3b43f47205e0362dd2beda675e13a4f52cb4f67e036b6998517c698c4f9079c0",
+          "sha256": "ed028225e4d439fc737a463b9147cee2bbe97360c93c8187895de4f37e72ce88"
+        },
+        {
+          "path": "src/generated/frpc_error_rpc.rs",
+          "model": "FRpcError",
+          "codec": "rpc",
+          "fingerprint": "sha256:4a043b62fdc0e07d53f42ccb409dc3546203f648269e7c4ec534f4475e3ddd7a",
+          "sha256": "af5529f1c526f8109652111f4c302ab707d6b27574653decf34ea6c73bb662c0"
+        },
+        {
+          "path": "src/generated/frpc_method_info_rpc.rs",
+          "model": "FRpcMethodInfo",
+          "codec": "rpc",
+          "fingerprint": "sha256:f0b7d74b8a72541b467a8909410f30874ade5e124cdee6f82d717211486fc2a7",
+          "sha256": "1febcaab065008985e30bb8f4983750b7c51b0657b58d0f897468c5d2f86967a"
+        },
+        {
+          "path": "src/generated/frpc_reflect_request_rpc.rs",
+          "model": "FRpcReflectRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:aaab56b8165c245bb6a314205af049d2bafa54983caf25caa8f0c7b8ccff8f71",
+          "sha256": "17ba9453841a15e1e5d052cb756979414bd6fc9ecfe62a70b720bcb2beff97e6"
+        },
+        {
+          "path": "src/generated/frpc_reflect_response_rpc.rs",
+          "model": "FRpcReflectResponse",
+          "codec": "rpc",
+          "fingerprint": "sha256:2a2c539fd24d8b443f75c1c37977c3bc8fd0d8cffb35f3920e59b206721dae40",
+          "sha256": "73f93cee1f3f3344a2b506870394aa2fc39e7729d078fc2e80329535f23c1030"
+        },
+        {
+          "path": "src/generated/frpc_void_rpc.rs",
+          "model": "FRpcVoid",
+          "codec": "rpc",
+          "fingerprint": "sha256:2b58fe10f955c83386b3b377b64aa08e695dc84d012a391c80da151205c7bac4",
+          "sha256": "f86552516ca2021f08807e90c4754645d848d1ed43c6617e908e5f4cbc0f33ee"
+        }
+      ]
+    },
+    "src/models/stream.rs": {
+      "models": [
+        "ChatHeard",
+        "ChatOpen",
+        "ChatSaid",
+        "TicksItem",
+        "TicksRequest",
+        "UploadChunk",
+        "UploadDone",
+        "UploadOpen"
+      ],
+      "outputs": [
+        {
+          "path": "src/generated/chat_heard_rpc.rs",
+          "model": "ChatHeard",
+          "codec": "rpc",
+          "fingerprint": "sha256:e7f7ca08d16b1a00f808b415932c7b9f4d78b4edb971b9d588b41da9df5324ca",
+          "sha256": "361bfbc29235b154017418a820ea1faab9582178c20de28e103b490a9699e18d"
+        },
+        {
+          "path": "src/generated/chat_open_rpc.rs",
+          "model": "ChatOpen",
+          "codec": "rpc",
+          "fingerprint": "sha256:3d4af6b9c83e293bda2e98baab650b19b9e40a3fedb38dd5e75f0153e7c8acae",
+          "sha256": "90f46a1ed26bcb83d30649f9bcc36e1cf49becf33a7ddcf3f1adc56a1e73a0e1"
+        },
+        {
+          "path": "src/generated/chat_said_rpc.rs",
+          "model": "ChatSaid",
+          "codec": "rpc",
+          "fingerprint": "sha256:e1399a587a239b43b32cfd6aa5bd437754c290903c3a670e7cef70aaa63383f9",
+          "sha256": "2fa66e31a34e11820008dca9305804bb3c0b442bb3437359feceba34d1542de8"
+        },
+        {
+          "path": "src/generated/ticks_item_rpc.rs",
+          "model": "TicksItem",
+          "codec": "rpc",
+          "fingerprint": "sha256:820ba1c0fdacdcfceb5c0e8181bcf46ce3ef73304d24e2c0e5ec7a0d750dd839",
+          "sha256": "d82ecc2cd1488dd1d60dfc2797ac2d2bb01e94d2d6deab3dc71736b2190a1008"
+        },
+        {
+          "path": "src/generated/ticks_request_rpc.rs",
+          "model": "TicksRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:68c7b9b2e11a98d3ad0ceb62b021c0d251eecb9c74cd08799521a9d532248578",
+          "sha256": "d7db287da7b0baf8a518e2e2ce4243905ac3efd035c044909a9fdf897ebc9781"
+        },
+        {
+          "path": "src/generated/upload_chunk_rpc.rs",
+          "model": "UploadChunk",
+          "codec": "rpc",
+          "fingerprint": "sha256:b28344e68b53bab60d7994e3ceb903891ff99bd245e462d6d5b6cf05be4a5fa1",
+          "sha256": "0e917b04cb1eaf39a694811b9a8eb65d8337625d15e61e212fdfe5b9f80970d8"
+        },
+        {
+          "path": "src/generated/upload_done_rpc.rs",
+          "model": "UploadDone",
+          "codec": "rpc",
+          "fingerprint": "sha256:7a9cb5b5480d918afa550b19854ea0910b843dd133dcc9322a7586fa16e79fbe",
+          "sha256": "d8690319f111b24046078225edbee31fc948db62c8ccf71c1c33a1d8c182b158"
+        },
+        {
+          "path": "src/generated/upload_open_rpc.rs",
+          "model": "UploadOpen",
+          "codec": "rpc",
+          "fingerprint": "sha256:46a5df3127c6e3848a6f91ff190ba9fdcbf3dd26bf000156ec645879ce863c67",
+          "sha256": "9675e6b848730ca1d01e78a188747741acc8972a262c2f86ec399f82849252a9"
+        }
+      ]
+    }
+  },
+  "shared": [
+    {
+      "path": "src/generated/runtime.rs",
+      "kind": "runtime",
+      "sha256": "60e5f0fcfce318799cb5aa24c6f6bd0daa6e77a22d120df73d4a4dfbe2f3cb74"
+    },
+    {
+      "path": "src/generated/handshake.rs",
+      "kind": "handshake",
+      "sha256": "340c2668754f1e94bf879fa4fb9246a981274aef24d4ccb819ac869a7ca4635f"
+    },
+    {
+      "path": "src/generated/mod.rs",
+      "kind": "root",
+      "sha256": "0da2c135ebd6d9ce2d0a95e1bc93eec8b8cbc7534e28c5de1ac638f7dd97a0d2"
+    }
+  ]
+}

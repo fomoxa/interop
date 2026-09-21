@@ -29,7 +29,7 @@ jobs:
           node-version: "22"
 
       - name: install fomoxac
-        run: cargo install fomoxac
+        run: cargo install fomoxac --version 0.2.1 --locked
 
       # Every peer's src/generated/ is committed, the same convention
       # fomoxac's own fixtures use - this fails fast if a model changed and
@@ -91,3 +91,34 @@ jobs:
 
       - name: run the interop matrix
         run: ./run.sh
+
+      - name: the committed frpc/rust-peer schema is current
+        working-directory: frpc/rust-peer/src/demo
+        run: fomoxac generate --check
+
+      - name: the committed frpc/csharp-peer schema is current
+        working-directory: frpc/csharp-peer
+        run: fomoxac generate --check
+
+      - name: the committed frpc/skew-peer schema is current
+        working-directory: frpc/skew-peer
+        run: fomoxac generate --check
+
+      - name: build frpc/rust-peer
+        working-directory: frpc/rust-peer
+        run: cargo build --release
+
+      - name: build frpc/csharp-peer
+        working-directory: frpc/csharp-peer
+        run: dotnet build -c Release
+
+      - name: build frpc/go-peer
+        working-directory: frpc/go-peer
+        run: go build -o frpc-go-peer .
+
+      - name: build frpc/skew-peer
+        working-directory: frpc/skew-peer
+        run: go build -o frpc-skew-peer .
+
+      - name: run the fRPC matrix
+        run: frpc/matrix.sh

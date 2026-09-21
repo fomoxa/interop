@@ -85,3 +85,37 @@ Before building, it runs `fomoxac generate --check` in each peer directory, whic
 4. Add the corresponding build and check steps to `.github/workflows/interop.yml`.
 
 The root `run.sh` and the pairing logic need no change, because peers are discovered by directory.
+
+## 9. fRPC
+
+`frpc/` runs the same kind of check one layer up, for the fRPC implementations. It is separate from the matrix above because its peers follow a different contract, and `frpc/` has no `run.sh` of its own, so the root `run.sh` does not pick it up.
+
+| Peer | Built from | Depends on |
+|---|---|---|
+| `frpc/rust-peer` | `examples/interop.rs` and `examples/demo` of frpc-rust, copied (see `SOURCE`) | `fomoxa-rpc` 0.1.0 from crates.io |
+| `frpc/csharp-peer` | `examples/Demo` and `examples/Interop/Program.cs` of frpc-csharp, copied (see `SOURCE`) | `Fomoxa.Rpc` 0.1.0 and `Fomoxa.Attributes` 0.1.0 from NuGet |
+| `frpc/go-peer` | `cmd/frpc-interop` of frpc-go, copied | `github.com/fomoxa/frpc-go` v0.1.0, whose `examples/demo` package it imports |
+| `frpc/skew-peer` | written here, with `EchoRequest` carrying one appended field | `github.com/fomoxa/frpc-go` v0.1.0 |
+
+Every fRPC peer accepts:
+
+```
+run.sh serve <host:port>        serve the demo methods, print "listening <address>", run until stdin closes
+run.sh drive <host:port>        run the eleven demo checks against a server, print "all checks passed"
+run.sh frames                   print the fixed frames scenario as hex
+run.sh say <host:port> <text>   call Echo.Say once and print the reply
+```
+
+`skew-peer` accepts only `serve` and `say`, and its `say` sends the appended field.
+
+`frpc/matrix.sh` checks that every peer prints the same frames, runs every peer's `drive` against every peer's `serve` (self-pairs included), and runs `say` in both directions between `skew-peer` and every other peer, which exercises the handshake's prefix comparison and its query round across languages.
+
+```sh
+(cd frpc/rust-peer && cargo build --release)
+(cd frpc/csharp-peer && dotnet build -c Release)
+(cd frpc/go-peer && go build -o frpc-go-peer .)
+(cd frpc/skew-peer && go build -o frpc-skew-peer .)
+frpc/matrix.sh
+```
+
+Every peer depends only on released versions, so a commit to any implementation repository changes nothing here until a version in this directory is raised. The copied sources change only when they are copied again. After raising a version, rebuild and run `frpc/matrix.sh`.

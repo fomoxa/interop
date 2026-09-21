@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "generator": "fomoxac 0.2.1",
+  "schema_fingerprint": "sha256:a559b3904b818c48bcfd3453d0f35708359e532f1c50585ee25f5f3f9aa263f8",
+  "sha256_of": "each file with its `// generated-at:` line emptied, so an unchanged schema keeps an unchanged digest",
+  "sources": {
+    "models/models.go": {
+      "models": [
+        "EchoRequest",
+        "EchoResponse",
+        "FRpcError",
+        "FRpcVoid"
+      ],
+      "outputs": [
+        {
+          "path": "generated/echo_request_rpc.go",
+          "model": "EchoRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:508c163aac3531bdf616e4debec3f5583c0498e46e5913fcce9021d7016afa31",
+          "sha256": "f32baad41fb4bb47dc69776a7ba87da0d7c7b0a9d68720624179a17265ba88dc"
+        },
+        {
+          "path": "generated/echo_response_rpc.go",
+          "model": "EchoResponse",
+          "codec": "rpc",
+          "fingerprint": "sha256:23368e8a5e0fca18ae512e3211b9d07a72688126005acf37265ad37b659f65c6",
+          "sha256": "5619080413f99a78db1c090c87efe72e994898fb32223308aaac761039aedfa4"
+        },
+        {
+          "path": "generated/frpc_error_rpc.go",
+          "model": "FRpcError",
+          "codec": "rpc",
+          "fingerprint": "sha256:4a043b62fdc0e07d53f42ccb409dc3546203f648269e7c4ec534f4475e3ddd7a",
+          "sha256": "cced2560de1e23f93d9cbddda7f0864587209378766788d7a0b14950fddcd7c7"
+        },
+        {
+          "path": "generated/frpc_void_rpc.go",
+          "model": "FRpcVoid",
+          "codec": "rpc",
+          "fingerprint": "sha256:2b58fe10f955c83386b3b377b64aa08e695dc84d012a391c80da151205c7bac4",
+          "sha256": "549d2826aa41e59cb095c2c90a56ab8d372db66338460e86c8f0e23f6da1580e"
+        }
+      ]
+    }
+  },
+  "shared": [
+    {
+      "path": "generated/runtime.go",
+      "kind": "runtime",
+      "sha256": "362a525ad5b9feba73e86547516ed256c77ffd5aab2bb48d1cef742d774dff65"
+    },
+    {
+      "path": "generated/handshake.go",
+      "kind": "handshake",
+      "sha256": "7ec50753f0963b393e899da23bd49fe26ccc1b29341b1516fa28c8c061f0b828"
+    }
+  ]
+}

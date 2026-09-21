@@ -1,0 +1,9 @@
+[package]
+name = "frpc-rust-peer"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+fomoxa-rpc = { version = "0.1.0", features = ["net"] }
+fomoxa-attributes = "0.1.1"

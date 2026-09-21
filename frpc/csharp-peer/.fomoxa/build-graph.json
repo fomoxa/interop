@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "generator": "fomoxac 0.2.1",
+  "schema_fingerprint": "sha256:b8f0e2543fc9c60d89329c4fa7f31e6f5a0e89600f61f31c1120c5907bfb0b29",
+  "sha256_of": "each file with its `// generated-at:` line emptied, so an unchanged schema keeps an unchanged digest",
+  "sources": {
+    "Models/Echo.cs": {
+      "models": [
+        "CountItem",
+        "CountRequest",
+        "EchoRequest",
+        "EchoResponse"
+      ],
+      "outputs": [
+        {
+          "path": "Generated/CountItemRpcCodec.cs",
+          "model": "CountItem",
+          "codec": "rpc",
+          "fingerprint": "sha256:a3a551bbfcf90a6c4c485d1dc4aed65525dc983eb0e1013fad1b71b69fa68996",
+          "sha256": "42f537b84dd43cd7b3b33d36b842e02c7955bda377d7028faaa94ec8eaee0ceb"
+        },
+        {
+          "path": "Generated/CountRequestRpcCodec.cs",
+          "model": "CountRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:12d24dcf758a97691a2e0bfce184b8dc0ef21a8e17a61878efb345ffaefdc671",
+          "sha256": "77fe8037b26ceaa8d5a485b4fcdf958c453180040759355c1cd42cf7411d023d"
+        },
+        {
+          "path": "Generated/EchoRequestRpcCodec.cs",
+          "model": "EchoRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:d477f0362150cb3d54936df622045344bffd326620133145fe322aa183b05e15",
+          "sha256": "b4a8326e5dd423057fe642dd54f4bd277de56dead8be8c5930245668c6536c6e"
+        },
+        {
+          "path": "Generated/EchoResponseRpcCodec.cs",
+          "model": "EchoResponse",
+          "codec": "rpc",
+          "fingerprint": "sha256:23368e8a5e0fca18ae512e3211b9d07a72688126005acf37265ad37b659f65c6",
+          "sha256": "e6c2a304e92baa467301e6aed87ee6aa4288543724442193a10e8acf30630d1a"
+        }
+      ]
+    },
+    "Models/FRpc.cs": {
+      "models": [
+        "FRpcCredit",
+        "FRpcCtx",
+        "FRpcError",
+        "FRpcMethodInfo",
+        "FRpcReflectRequest",
+        "FRpcReflectResponse",
+        "FRpcVoid"
+      ],
+      "outputs": [
+        {
+          "path": "Generated/FRpcCreditRpcCodec.cs",
+          "model": "FRpcCredit",
+          "codec": "rpc",
+          "fingerprint": "sha256:9f3d9aee476f42bdd8ea725b429837c5ebb3a5436604550c2a925ac1cfeb85f4",
+          "sha256": "b0e855c8953a8b7ff08a632050fe66ecedf21c7e497d7aaa91b2c415d3e87ee6"
+        },
+        {
+          "path": "Generated/FRpcCtxRpcCodec.cs",
+          "model": "FRpcCtx",
+          "codec": "rpc",
+          "fingerprint": "sha256:3b43f47205e0362dd2beda675e13a4f52cb4f67e036b6998517c698c4f9079c0",
+          "sha256": "f1b46e772d63fe6b5850d1b1d54f8d2b02fbeac9b8e496ddd4b0e0b7ae3dabb3"
+        },
+        {
+          "path": "Generated/FRpcErrorRpcCodec.cs",
+          "model": "FRpcError",
+          "codec": "rpc",
+          "fingerprint": "sha256:4a043b62fdc0e07d53f42ccb409dc3546203f648269e7c4ec534f4475e3ddd7a",
+          "sha256": "92d6222d3b19906256235da892e734a1f802e156386f579695a2a258ce44c68e"
+        },
+        {
+          "path": "Generated/FRpcMethodInfoRpcCodec.cs",
+          "model": "FRpcMethodInfo",
+          "codec": "rpc",
+          "fingerprint": "sha256:f0b7d74b8a72541b467a8909410f30874ade5e124cdee6f82d717211486fc2a7",
+          "sha256": "707245e205c4d80879ea0e44c28400ac0a9ef2479f0bc0459652cda3b017ff68"
+        },
+        {
+          "path": "Generated/FRpcReflectRequestRpcCodec.cs",
+          "model": "FRpcReflectRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:aaab56b8165c245bb6a314205af049d2bafa54983caf25caa8f0c7b8ccff8f71",
+          "sha256": "b49bd4e2767a81aa77599a743fc6f4cf9973d8c84f5223982352bf073e8a6e6c"
+        },
+        {
+          "path": "Generated/FRpcReflectResponseRpcCodec.cs",
+          "model": "FRpcReflectResponse",
+          "codec": "rpc",
+          "fingerprint": "sha256:2a2c539fd24d8b443f75c1c37977c3bc8fd0d8cffb35f3920e59b206721dae40",
+          "sha256": "13b3050ee5b74789d27aa79fbf19605607a894b1e59adaff6315f5c9e4858f76"
+        },
+        {
+          "path": "Generated/FRpcVoidRpcCodec.cs",
+          "model": "FRpcVoid",
+          "codec": "rpc",
+          "fingerprint": "sha256:2b58fe10f955c83386b3b377b64aa08e695dc84d012a391c80da151205c7bac4",
+          "sha256": "a5914d3fd55108a2dcb71aaa678f75ccb2e757180ffd74cb7b5589f2209b36c5"
+        }
+      ]
+    },
+    "Models/Stream.cs": {
+      "models": [
+        "ChatHeard",
+        "ChatOpen",
+        "ChatSaid",
+        "TicksItem",
+        "TicksRequest",
+        "UploadChunk",
+        "UploadDone",
+        "UploadOpen"
+      ],
+      "outputs": [
+        {
+          "path": "Generated/ChatHeardRpcCodec.cs",
+          "model": "ChatHeard",
+          "codec": "rpc",
+          "fingerprint": "sha256:e7f7ca08d16b1a00f808b415932c7b9f4d78b4edb971b9d588b41da9df5324ca",
+          "sha256": "bc2bfe04ce749c1ad0cddf0b504a097420e907af3614132a123a467432b8bbee"
+        },
+        {
+          "path": "Generated/ChatOpenRpcCodec.cs",
+          "model": "ChatOpen",
+          "codec": "rpc",
+          "fingerprint": "sha256:3d4af6b9c83e293bda2e98baab650b19b9e40a3fedb38dd5e75f0153e7c8acae",
+          "sha256": "8eaf627a3636a970d416f038b8eec64ac7879451024c7a1637569235b9f7b621"
+        },
+        {
+          "path": "Generated/ChatSaidRpcCodec.cs",
+          "model": "ChatSaid",
+          "codec": "rpc",
+          "fingerprint": "sha256:e1399a587a239b43b32cfd6aa5bd437754c290903c3a670e7cef70aaa63383f9",
+          "sha256": "85b4247b9dbdfd059bd249b88be9ddddc249dd89e47c6c45e4f4fed681d46dc6"
+        },
+        {
+          "path": "Generated/TicksItemRpcCodec.cs",
+          "model": "TicksItem",
+          "codec": "rpc",
+          "fingerprint": "sha256:820ba1c0fdacdcfceb5c0e8181bcf46ce3ef73304d24e2c0e5ec7a0d750dd839",
+          "sha256": "7ef3ba0d8ce77717d875cea38833bb752f3a94aecd1eb7567e03c1f30daa81ad"
+        },
+        {
+          "path": "Generated/TicksRequestRpcCodec.cs",
+          "model": "TicksRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:68c7b9b2e11a98d3ad0ceb62b021c0d251eecb9c74cd08799521a9d532248578",
+          "sha256": "48390fe64edcb2da5bf63e9aa7ddad9fa95f8bfb752f76303c10eee9d0cb1d0e"
+        },
+        {
+          "path": "Generated/UploadChunkRpcCodec.cs",
+          "model": "UploadChunk",
+          "codec": "rpc",
+          "fingerprint": "sha256:b28344e68b53bab60d7994e3ceb903891ff99bd245e462d6d5b6cf05be4a5fa1",
+          "sha256": "e62dca7b819c77ce8141654423b29dcd6c96c232ae6bc066dda4f095a9d622fa"
+        },
+        {
+          "path": "Generated/UploadDoneRpcCodec.cs",
+          "model": "UploadDone",
+          "codec": "rpc",
+          "fingerprint": "sha256:7a9cb5b5480d918afa550b19854ea0910b843dd133dcc9322a7586fa16e79fbe",
+          "sha256": "8f47368a4c653b6fb44a3b6e7dd89194a6b32472b1e3bfcc9ccea32f9fa61022"
+        },
+        {
+          "path": "Generated/UploadOpenRpcCodec.cs",
+          "model": "UploadOpen",
+          "codec": "rpc",
+          "fingerprint": "sha256:46a5df3127c6e3848a6f91ff190ba9fdcbf3dd26bf000156ec645879ce863c67",
+          "sha256": "8798e4c7fb695027b5b0a9a8a5636ee4e372f3eae829817c1ad4db04456084c4"
+        }
+      ]
+    }
+  },
+  "shared": [
+    {
+      "path": "Generated/Runtime.cs",
+      "kind": "runtime",
+      "sha256": "1e088d077c7ea4c4da9333cef21bbf664223240c10a78b0867a22eb50e84a7f3"
+    },
+    {
+      "path": "Generated/Handshake.cs",
+      "kind": "handshake",
+      "sha256": "54b8700e6ecf316b559b2e342301154e1a7df4727de1d139a4bef10e73b7f7bd"
+    }
+  ]
+}

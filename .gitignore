@@ -8,6 +8,8 @@ obj/
 
 # Go
 go-peer/go-peer
+frpc/go-peer/frpc-go-peer
+frpc/skew-peer/frpc-skew-peer
 
 # CMake (c-peer, cpp-peer)
 build/
