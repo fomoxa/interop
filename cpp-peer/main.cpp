@@ -24,11 +24,17 @@ bool same_player(const models::Player &a, const models::Player &b) {
     return a.Id == b.Id && a.X == b.X && a.Y == b.Y;
 }
 
+constexpr std::size_t large_extra_messages = 300;
+constexpr std::uint32_t large_first_id = 0x7F000000u;
+constexpr std::uint64_t large_first_fingerprint = 0xF00D000000000000ull;
+
 std::vector<fmx_message_schema> g_messages;
+std::vector<std::uint64_t> g_large_prefixes;
 fmx_schema g_schema;
 
-const fmx_schema *peer_schema() {
+const fmx_schema *peer_schema(bool large) {
     g_messages.clear();
+    g_large_prefixes.clear();
     for (const auto &message : generated::FOMOXA_MESSAGES) {
         fmx_message_schema m;
         m.id = message.id;
@@ -36,6 +42,20 @@ const fmx_schema *peer_schema() {
         m.prefixes = message.prefixes;
         m.prefix_count = message.prefix_count;
         g_messages.push_back(m);
+    }
+    if (large) {
+        g_large_prefixes.reserve(large_extra_messages);
+        for (std::size_t index = 0; index < large_extra_messages; ++index) {
+            g_large_prefixes.push_back(large_first_fingerprint + index);
+        }
+        for (std::size_t index = 0; index < large_extra_messages; ++index) {
+            fmx_message_schema m;
+            m.id = large_first_id + static_cast<std::uint32_t>(index);
+            m.fingerprint = g_large_prefixes[index];
+            m.prefixes = &g_large_prefixes[index];
+            m.prefix_count = 1;
+            g_messages.push_back(m);
+        }
     }
     g_schema.fingerprint = generated::FOMOXA_SCHEMA_FINGERPRINT;
     g_schema.messages = g_messages.data();
@@ -74,13 +94,13 @@ void nap() {
     std::this_thread::sleep_for(std::chrono::milliseconds(16));
 }
 
-void run_server(const std::string &host, std::uint16_t port, bool udp) {
+void run_server(const std::string &host, std::uint16_t port, bool udp, bool large) {
     auto listener = udp ? fomoxa::Listener::udp(host, port) : fomoxa::Listener::tcp(host, port);
     if (!listener) {
         std::fprintf(stderr, "cpp-peer: bind the interop address\n");
         std::exit(1);
     }
-    auto server = fomoxa::Server::create(std::move(*listener), peer_schema());
+    auto server = fomoxa::Server::create(std::move(*listener), peer_schema(large));
     if (!server) {
         std::fprintf(stderr, "cpp-peer: cannot create the server\n");
         std::exit(1);
@@ -141,13 +161,13 @@ void run_server(const std::string &host, std::uint16_t port, bool udp) {
     std::exit(1);
 }
 
-void run_client(const std::string &host, std::uint16_t port, bool udp) {
+void run_client(const std::string &host, std::uint16_t port, bool udp, bool large) {
     auto transport = udp ? fomoxa::Transport::udp(host, port) : fomoxa::Transport::tcp(host, port);
     if (!transport) {
         std::fprintf(stderr, "cpp-peer: connect to the interop address\n");
         std::exit(1);
     }
-    auto connection = fomoxa::Connection::create(std::move(*transport), peer_schema());
+    auto connection = fomoxa::Connection::create(std::move(*transport), peer_schema(large));
     if (!connection) {
         std::fprintf(stderr, "cpp-peer: cannot create the connection\n");
         std::exit(1);
@@ -210,6 +230,7 @@ int main(int argc, char **argv) {
     std::string role;
     std::string addr;
     std::string transport = "tcp";
+    std::string schema = "base";
 
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
@@ -219,6 +240,8 @@ int main(int argc, char **argv) {
             addr = argv[++i];
         } else if (arg == "--transport" && i + 1 < argc) {
             transport = argv[++i];
+        } else if (arg == "--schema" && i + 1 < argc) {
+            schema = argv[++i];
         } else {
             std::fprintf(stderr, "cpp-peer: unknown argument: %s\n", arg.c_str());
             return 2;
@@ -238,15 +261,21 @@ int main(int argc, char **argv) {
         return 2;
     }
 
+    if (schema != "base" && schema != "large") {
+        std::fprintf(stderr, "cpp-peer: unknown schema: %s (expected base or large)\n",
+                     schema.c_str());
+        return 2;
+    }
+
     std::string host;
     std::uint16_t port = 0;
     split_addr(addr, host, port);
     bool udp = transport == "udp";
 
     if (role == "server") {
-        run_server(host, port, udp);
+        run_server(host, port, udp, schema == "large");
     } else if (role == "client") {
-        run_client(host, port, udp);
+        run_client(host, port, udp, schema == "large");
     } else {
         std::fprintf(stderr, "cpp-peer: unknown role: %s (expected server or client)\n",
                      role.c_str());

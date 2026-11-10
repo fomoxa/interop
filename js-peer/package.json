@@ -6,6 +6,6 @@
     "node": ">=22"
   },
   "dependencies": {
-    "@fomoxa/net": "^0.1.0"
+    "@fomoxa/net": "^0.1.3"
   }
 }

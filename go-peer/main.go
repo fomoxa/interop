@@ -17,10 +17,22 @@ const timeout = 10 * time.Second
 var serverSends = models.Player{ID: 100, X: 10.5, Y: 20.0}
 var clientSends = models.Player{ID: 200, X: 1.0, Y: 2.0}
 
-func schema() *fomoxa.Schema {
+const (
+	largeExtraMessages    = 300
+	largeFirstID          = 0x7F000000
+	largeFirstFingerprint = 0xF00D000000000000
+)
+
+func schema(large bool) *fomoxa.Schema {
 	messages := make([]fomoxa.Message, len(generated.FomoxaMessages))
 	for i, m := range generated.FomoxaMessages {
 		messages[i] = fomoxa.Message{ID: m.ID, Fingerprint: m.Fingerprint, Prefixes: m.Prefixes}
+	}
+	if large {
+		for i := uint32(0); i < largeExtraMessages; i++ {
+			fingerprint := largeFirstFingerprint + uint64(i)
+			messages = append(messages, fomoxa.Message{ID: largeFirstID + i, Fingerprint: fingerprint, Prefixes: []uint64{fingerprint}})
+		}
 	}
 	s, err := fomoxa.NewSchema(generated.FomoxaSchemaFingerprint, messages)
 	if err != nil {
@@ -49,13 +61,13 @@ func samePlayer(a, b models.Player) bool {
 	return a.ID == b.ID && a.X == b.X && a.Y == b.Y
 }
 
-func runServer(addr string, udp bool) {
+func runServer(addr string, udp bool, large bool) {
 	var server *fomoxa.Server
 	var err error
 	if udp {
-		server, err = fomoxa.ListenUDP(addr, schema(), fomoxa.DefaultConfig())
+		server, err = fomoxa.ListenUDP(addr, schema(large), fomoxa.DefaultConfig())
 	} else {
-		server, err = fomoxa.ListenTCP(addr, schema(), fomoxa.DefaultConfig())
+		server, err = fomoxa.ListenTCP(addr, schema(large), fomoxa.DefaultConfig())
 	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "go-peer: bind the interop address: %v\n", err)
@@ -106,13 +118,13 @@ func runServer(addr string, udp bool) {
 	os.Exit(1)
 }
 
-func runClient(addr string, udp bool) {
+func runClient(addr string, udp bool, large bool) {
 	var conn *fomoxa.Conn
 	var err error
 	if udp {
-		conn, err = fomoxa.DialUDP(addr, schema(), fomoxa.DefaultConfig())
+		conn, err = fomoxa.DialUDP(addr, schema(large), fomoxa.DefaultConfig())
 	} else {
-		conn, err = fomoxa.DialTCP(addr, schema(), fomoxa.DefaultConfig())
+		conn, err = fomoxa.DialTCP(addr, schema(large), fomoxa.DefaultConfig())
 	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "go-peer: connect to the interop address: %v\n", err)
@@ -165,6 +177,7 @@ func main() {
 	role := flag.String("role", "", "server or client")
 	addr := flag.String("addr", "", "host:port")
 	transport := flag.String("transport", "tcp", "tcp or udp")
+	schemaMode := flag.String("schema", "base", "base or large")
 	flag.Parse()
 
 	if *role == "" {
@@ -180,12 +193,17 @@ func main() {
 		os.Exit(2)
 	}
 	udp := *transport == "udp"
+	if *schemaMode != "base" && *schemaMode != "large" {
+		fmt.Fprintf(os.Stderr, "go-peer: unknown schema: %s (expected base or large)\n", *schemaMode)
+		os.Exit(2)
+	}
+	large := *schemaMode == "large"
 
 	switch *role {
 	case "server":
-		runServer(*addr, udp)
+		runServer(*addr, udp, large)
 	case "client":
-		runClient(*addr, udp)
+		runClient(*addr, udp, large)
 	default:
 		fmt.Fprintf(os.Stderr, "go-peer: unknown role: %s (expected server or client)\n", *role)
 		os.Exit(2)

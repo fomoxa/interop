@@ -33,20 +33,37 @@ static void nap(void) {
 static const struct Player SERVER_SENDS = {100, 10.5f, 20.0f};
 static const struct Player CLIENT_SENDS = {200, 1.0f, 2.0f};
 
-static fmx_message_schema PEER_MESSAGES[sizeof(FOMOXA_MESSAGES) / sizeof(FOMOXA_MESSAGES[0])];
+#define LARGE_EXTRA_MESSAGES 300
+#define LARGE_FIRST_ID 0x7F000000u
+#define LARGE_FIRST_FINGERPRINT 0xF00D000000000000ull
+
+static fmx_message_schema
+    PEER_MESSAGES[sizeof(FOMOXA_MESSAGES) / sizeof(FOMOXA_MESSAGES[0]) + LARGE_EXTRA_MESSAGES];
+static uint64_t LARGE_PREFIXES[LARGE_EXTRA_MESSAGES];
 static fmx_schema PEER_SCHEMA;
 
-static const fmx_schema *peer_schema(void) {
+static const fmx_schema *peer_schema(int large) {
     size_t index;
+    size_t count = FOMOXA_MESSAGES_COUNT;
     for (index = 0; index < FOMOXA_MESSAGES_COUNT; ++index) {
         PEER_MESSAGES[index].id = FOMOXA_MESSAGES[index].id;
         PEER_MESSAGES[index].fingerprint = FOMOXA_MESSAGES[index].fingerprint;
         PEER_MESSAGES[index].prefixes = FOMOXA_MESSAGES[index].prefixes;
         PEER_MESSAGES[index].prefix_count = FOMOXA_MESSAGES[index].prefix_count;
     }
+    if (large) {
+        for (index = 0; index < LARGE_EXTRA_MESSAGES; ++index) {
+            LARGE_PREFIXES[index] = LARGE_FIRST_FINGERPRINT + index;
+            PEER_MESSAGES[count].id = LARGE_FIRST_ID + (uint32_t)index;
+            PEER_MESSAGES[count].fingerprint = LARGE_PREFIXES[index];
+            PEER_MESSAGES[count].prefixes = &LARGE_PREFIXES[index];
+            PEER_MESSAGES[count].prefix_count = 1;
+            count += 1;
+        }
+    }
     PEER_SCHEMA.fingerprint = FOMOXA_SCHEMA_FINGERPRINT;
     PEER_SCHEMA.messages = PEER_MESSAGES;
-    PEER_SCHEMA.message_count = FOMOXA_MESSAGES_COUNT;
+    PEER_SCHEMA.message_count = count;
     return &PEER_SCHEMA;
 }
 
@@ -87,7 +104,7 @@ static void split_addr(const char *addr, char *host, size_t host_size, uint16_t 
     *port = (uint16_t)atoi(colon + 1);
 }
 
-static void run_server(const char *host, uint16_t port, int udp) {
+static void run_server(const char *host, uint16_t port, int udp, int large) {
     fmx_listener listener;
     fmx_server *server;
     fmx_result result;
@@ -98,7 +115,7 @@ static void run_server(const char *host, uint16_t port, int udp) {
         fprintf(stderr, "c-peer: bind the interop address: %s\n", fmx_result_name(result));
         exit(1);
     }
-    server = fmx_server_create(listener, peer_schema(), NULL);
+    server = fmx_server_create(listener, peer_schema(large), NULL);
     if (server == NULL) {
         fprintf(stderr, "c-peer: cannot create the server\n");
         exit(1);
@@ -167,7 +184,7 @@ static void run_server(const char *host, uint16_t port, int udp) {
     exit(1);
 }
 
-static void run_client(const char *host, uint16_t port, int udp) {
+static void run_client(const char *host, uint16_t port, int udp, int large) {
     fmx_transport transport;
     fmx_connection *connection;
     fmx_result result;
@@ -178,7 +195,7 @@ static void run_client(const char *host, uint16_t port, int udp) {
         fprintf(stderr, "c-peer: connect to the interop address: %s\n", fmx_result_name(result));
         exit(1);
     }
-    connection = fmx_connection_create(transport, peer_schema(), NULL, fmx_now_ms());
+    connection = fmx_connection_create(transport, peer_schema(large), NULL, fmx_now_ms());
     if (connection == NULL) {
         fprintf(stderr, "c-peer: cannot create the connection\n");
         exit(1);
@@ -249,6 +266,7 @@ int main(int argc, char **argv) {
     const char *role = NULL;
     const char *addr = NULL;
     const char *transport = "tcp";
+    const char *schema = "base";
     char host[256];
     uint16_t port;
     int index;
@@ -260,6 +278,8 @@ int main(int argc, char **argv) {
             addr = argv[++index];
         } else if (strcmp(argv[index], "--transport") == 0 && index + 1 < argc) {
             transport = argv[++index];
+        } else if (strcmp(argv[index], "--schema") == 0 && index + 1 < argc) {
+            schema = argv[++index];
         } else {
             fprintf(stderr, "c-peer: unknown argument: %s\n", argv[index]);
             return 2;
@@ -277,13 +297,17 @@ int main(int argc, char **argv) {
         fprintf(stderr, "c-peer: unknown transport: %s (expected tcp or udp)\n", transport);
         return 2;
     }
+    if (strcmp(schema, "base") != 0 && strcmp(schema, "large") != 0) {
+        fprintf(stderr, "c-peer: unknown schema: %s (expected base or large)\n", schema);
+        return 2;
+    }
 
     split_addr(addr, host, sizeof(host), &port);
 
     if (strcmp(role, "server") == 0) {
-        run_server(host, port, strcmp(transport, "udp") == 0);
+        run_server(host, port, strcmp(transport, "udp") == 0, strcmp(schema, "large") == 0);
     } else if (strcmp(role, "client") == 0) {
-        run_client(host, port, strcmp(transport, "udp") == 0);
+        run_client(host, port, strcmp(transport, "udp") == 0, strcmp(schema, "large") == 0);
     } else {
         fprintf(stderr, "c-peer: unknown role: %s (expected server or client)\n", role);
         return 2;

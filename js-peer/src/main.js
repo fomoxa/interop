@@ -17,15 +17,23 @@ const TIMEOUT_MS = 10_000;
 const SERVER_SENDS = { id: 100, x: 10.5, y: 20.0 };
 const CLIENT_SENDS = { id: 200, x: 1.0, y: 2.0 };
 
-function schema() {
-    return buildSchema(
-        FOMOXA_SCHEMA_FINGERPRINT,
-        FOMOXA_MESSAGES.map((message) => ({
-            id: message.id,
-            fingerprint: message.fingerprint,
-            prefixes: message.prefixes,
-        })),
-    );
+const LARGE_EXTRA_MESSAGES = 300;
+const LARGE_FIRST_ID = 0x7f000000;
+const LARGE_FIRST_FINGERPRINT = 0xf00d000000000000n;
+
+function schema(large) {
+    const messages = FOMOXA_MESSAGES.map((message) => ({
+        id: message.id,
+        fingerprint: message.fingerprint,
+        prefixes: message.prefixes,
+    }));
+    if (large) {
+        for (let index = 0; index < LARGE_EXTRA_MESSAGES; index += 1) {
+            const fingerprint = LARGE_FIRST_FINGERPRINT + BigInt(index);
+            messages.push({ id: LARGE_FIRST_ID + index, fingerprint, prefixes: [fingerprint] });
+        }
+    }
+    return buildSchema(FOMOXA_SCHEMA_FINGERPRINT, messages);
 }
 
 function encode(player) {
@@ -52,6 +60,7 @@ function parseArgs(argv) {
     let role;
     let addr;
     let transport = "tcp";
+    let large = false;
     for (let i = 0; i < argv.length; i += 1) {
         const arg = argv[i];
         if (arg === "--role") {
@@ -64,6 +73,13 @@ function parseArgs(argv) {
                 console.error("js-peer: --transport needs a value");
                 process.exit(2);
             }
+        } else if (arg === "--schema") {
+            const mode = argv[(i += 1)];
+            if (mode !== "base" && mode !== "large") {
+                console.error("js-peer: --schema needs base or large");
+                process.exit(2);
+            }
+            large = mode === "large";
         } else {
             console.error(`js-peer: unknown argument: ${arg}`);
             process.exit(2);
@@ -77,7 +93,7 @@ function parseArgs(argv) {
         console.error("js-peer: --addr host:port is required");
         process.exit(2);
     }
-    return { role, addr, transport };
+    return { role, addr, transport, large };
 }
 
 function splitAddr(addr) {
@@ -167,13 +183,13 @@ async function main() {
     const { host, port } = splitAddr(args.addr);
 
     if (args.role === "server" && args.transport === "tcp") {
-        await runServer(args.addr, await listen(host, port, schema()));
+        await runServer(args.addr, await listen(host, port, schema(args.large)));
     } else if (args.role === "server" && args.transport === "udp") {
-        await runServer(args.addr, await listenUdpServer(host, port, schema()));
+        await runServer(args.addr, await listenUdpServer(host, port, schema(args.large)));
     } else if (args.role === "client" && args.transport === "tcp") {
-        await runClient(args.addr, await connect(host, port, schema()));
+        await runClient(args.addr, await connect(host, port, schema(args.large)));
     } else if (args.role === "client" && args.transport === "udp") {
-        await runClient(args.addr, await connectUdpSession(host, port, schema()));
+        await runClient(args.addr, await connectUdpSession(host, port, schema(args.large)));
     } else {
         console.error(
             `js-peer: unsupported combination: --role ${args.role} --transport ${args.transport} ` +

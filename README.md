@@ -24,7 +24,7 @@ Every peer:
 |---|---|---|
 | Rust | `fomoxa-net` | crates.io, declared in `rust-peer/Cargo.toml` |
 | C# | `Fomoxa.Net` | NuGet, declared in `csharp-peer/CsharpPeer.csproj` |
-| Go | `github.com/fomoxa/go` | Fetched directly from the repository with `go get` and declared in `go-peer/go.mod`, which pins a pseudo-version of one commit. Go modules have no separate package registry |
+| Go | `github.com/fomoxa/go` | Fetched directly from the repository with `go get` and declared in `go-peer/go.mod`, which pins a release tag. Go modules have no separate package registry |
 | C, C++ | `github.com/fomoxa/c` | Fetched by CMake `FetchContent` at configure time and linked as `fomoxa::fomoxa`; declared in `c-peer/CMakeLists.txt` and `cpp-peer/CMakeLists.txt`. There is no C or C++ package registry for this dependency |
 | JavaScript | `@fomoxa/net` | npm, declared in `js-peer/package.json` |
 
@@ -37,10 +37,13 @@ The installed `fomoxa` library leaves it out on purpose, as `fomoxa/CMakeLists.t
 Every peer executable accepts the following arguments.
 
 ```
-run.sh --role server|client --addr host:port [--transport tcp|udp]
+run.sh --role server|client --addr host:port [--transport tcp|udp] [--schema base|large]
 ```
 
-`--transport` defaults to `tcp`.
+`--transport` defaults to `tcp`, and `--schema` defaults to `base`.
+With `--schema large`, each peer adds 300 messages to its generated schema: ids `0x7F000000` to `0x7F00012B`, each with fingerprint `0xF00D000000000000` plus its offset from the first id, as its one prefix.
+Both ends add the same messages, so the schema fingerprints still match.
+The hello then holds 301 entries, 4,230 bytes, and over UDP it leaves as five HANDSHAKE PART frames (implementation guide §2.8), so this mode checks that every SDK splits a large hello and that every SDK puts the parts back together.
 On startup, the server sends `Player{id:100,x:10.5,y:20.0}` once a client has completed the handshake, and waits for a reply.
 The client waits for that message, validates it, and replies with `Player{id:200,x:1.0,y:2.0}`.
 Each side exits with status `0` once the exchange is validated, and with a non-zero status and a diagnostic on stderr otherwise.
@@ -67,8 +70,8 @@ The handshake between any pair of peers depends on that equivalence.
 ./run.sh
 ```
 
-`run.sh` discovers every peer directory that contains an executable `run.sh`, and runs each peer as a server against every other peer as a client, in both directions, including self-pairs, over both `tcp` and `udp`.
-With six peers, this produces 72 combinations (6 × 6 × 2).
+`run.sh` discovers every peer directory that contains an executable `run.sh`, and runs each peer as a server against every other peer as a client, in both directions, including self-pairs, in three modes: `tcp` and `udp` with the base schema, and `udp` with the large schema.
+With six peers, this produces 108 combinations (6 × 6 × 3).
 The script exits with a non-zero status if any combination fails.
 
 ## 7. Continuous integration

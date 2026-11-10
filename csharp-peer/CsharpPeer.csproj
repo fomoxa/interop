@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fomoxa.Net" Version="0.1.0" />
+    <PackageReference Include="Fomoxa.Net" Version="0.1.4" />
     <PackageReference Include="Fomoxa.Attributes" Version="0.1.0" />
   </ItemGroup>
 

@@ -22,6 +22,7 @@ namespace CsharpPeer
             string role = null;
             string addrArg = null;
             string transport = "tcp";
+            string schema = "base";
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i] == "--role" && i + 1 < args.Length)
@@ -35,6 +36,10 @@ namespace CsharpPeer
                 else if (args[i] == "--transport" && i + 1 < args.Length)
                 {
                     transport = args[++i];
+                }
+                else if (args[i] == "--schema" && i + 1 < args.Length)
+                {
+                    schema = args[++i];
                 }
                 else
                 {
@@ -59,29 +64,46 @@ namespace CsharpPeer
                 return 2;
             }
 
+            if (schema != "base" && schema != "large")
+            {
+                Console.Error.WriteLine($"csharp-peer: unknown schema: {schema} (expected base or large)");
+                return 2;
+            }
+
             var parts = addrArg.Split(':');
             var endpoint = new IPEndPoint(IPAddress.Parse(parts[0]), int.Parse(parts[1]));
             bool udp = transport == "udp";
+            bool large = schema == "large";
 
             switch (role)
             {
                 case "server":
-                    return RunServer(endpoint, udp);
+                    return RunServer(endpoint, udp, large);
                 case "client":
-                    return RunClient(endpoint, udp);
+                    return RunClient(endpoint, udp, large);
                 default:
                     Console.Error.WriteLine($"csharp-peer: unknown role: {role} (expected server or client)");
                     return 2;
             }
         }
 
-        private static Schema BuildSchema()
+        private const int LargeExtraMessages = 300;
+        private const uint LargeFirstId = 0x7F000000u;
+        private const ulong LargeFirstFingerprint = 0xF00D000000000000ul;
+
+        private static Schema BuildSchema(bool large)
         {
-            var messages = new MessageSchema[Handshake.FomoxaMessages.Length];
-            for (int i = 0; i < messages.Length; i++)
+            var messages = new MessageSchema[Handshake.FomoxaMessages.Length + (large ? LargeExtraMessages : 0)];
+            for (int i = 0; i < Handshake.FomoxaMessages.Length; i++)
             {
                 var message = Handshake.FomoxaMessages[i];
                 messages[i] = new MessageSchema(message.Id, message.Fingerprint, message.Prefixes);
+            }
+            for (int i = Handshake.FomoxaMessages.Length; i < messages.Length; i++)
+            {
+                uint index = (uint)(i - Handshake.FomoxaMessages.Length);
+                ulong fingerprint = LargeFirstFingerprint + index;
+                messages[i] = new MessageSchema(LargeFirstId + index, fingerprint, new[] { fingerprint });
             }
             return new Schema(Handshake.FomoxaSchemaFingerprint, messages);
         }
@@ -104,12 +126,12 @@ namespace CsharpPeer
         private static bool SamePlayer(Models.Player a, Models.Player b) =>
             a.Id == b.Id && a.X == b.X && a.Y == b.Y;
 
-        private static int RunServer(IPEndPoint endpoint, bool udp)
+        private static int RunServer(IPEndPoint endpoint, bool udp, bool large)
         {
             IListenerTransport listener = udp
                 ? new UdpServerTransport(endpoint)
                 : new TcpListenerTransport(endpoint);
-            using var server = new FomoxaServer(listener, BuildSchema(), new SessionConfig());
+            using var server = new FomoxaServer(listener, BuildSchema(large), new SessionConfig());
             Console.WriteLine($"csharp-peer: server listening on {(udp ? "udp" : "tcp")} {endpoint}");
 
             var expected = ClientSends();
@@ -163,10 +185,10 @@ namespace CsharpPeer
             return 1;
         }
 
-        private static int RunClient(IPEndPoint endpoint, bool udp)
+        private static int RunClient(IPEndPoint endpoint, bool udp, bool large)
         {
             ITransport transport = udp ? UdpTransport.Connect(endpoint) : TcpTransport.Connect(endpoint);
-            using var connection = FomoxaConnection.Connect(transport, BuildSchema(), new SessionConfig());
+            using var connection = FomoxaConnection.Connect(transport, BuildSchema(large), new SessionConfig());
             Console.WriteLine($"csharp-peer: client connected to {(udp ? "udp" : "tcp")} {endpoint}");
 
             var expected = ServerSends();

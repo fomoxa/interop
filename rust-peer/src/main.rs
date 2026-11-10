@@ -28,16 +28,24 @@ const TIMEOUT: Duration = Duration::from_secs(10);
 const SERVER_SENDS: Player = Player { id: 100, x: 10.5, y: 20.0 };
 const CLIENT_SENDS: Player = Player { id: 200, x: 1.0, y: 2.0 };
 
-fn schema() -> Arc<Schema> {
+const LARGE_EXTRA_MESSAGES: u32 = 300;
+const LARGE_FIRST_ID: u32 = 0x7F00_0000;
+const LARGE_FIRST_FINGERPRINT: u64 = 0xF00D_0000_0000_0000;
+
+fn schema(large: bool) -> Arc<Schema> {
+    let mut messages: Vec<_> = FOMOXA_MESSAGES
+        .iter()
+        .map(|message| MessageSchema::new(message.id, message.fingerprint, message.prefixes))
+        .collect();
+    if large {
+        messages.extend((0..LARGE_EXTRA_MESSAGES).map(|index| {
+            let fingerprint = LARGE_FIRST_FINGERPRINT + u64::from(index);
+            MessageSchema::new(LARGE_FIRST_ID + index, fingerprint, vec![fingerprint])
+        }));
+    }
     Arc::new(
-        Schema::new(
-            FOMOXA_SCHEMA_FINGERPRINT,
-            FOMOXA_MESSAGES
-                .iter()
-                .map(|message| MessageSchema::new(message.id, message.fingerprint, message.prefixes))
-                .collect::<Vec<_>>(),
-        )
-        .expect("fomoxac never writes a schema this rejects"),
+        Schema::new(FOMOXA_SCHEMA_FINGERPRINT, messages)
+            .expect("fomoxac never writes a schema this rejects"),
     )
 }
 
@@ -58,12 +66,14 @@ struct Args {
     role: String,
     addr: String,
     transport: String,
+    large: bool,
 }
 
 fn parse_args() -> Args {
     let mut role = None;
     let mut addr = None;
     let mut transport = "tcp".to_owned();
+    let mut large = false;
     let mut it = env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.as_str() {
@@ -75,6 +85,14 @@ fn parse_args() -> Args {
                     exit(2);
                 });
             }
+            "--schema" => match it.next().as_deref() {
+                Some("base") => large = false,
+                Some("large") => large = true,
+                _ => {
+                    eprintln!("rust-peer: --schema needs base or large");
+                    exit(2);
+                }
+            },
             other => {
                 eprintln!("rust-peer: unknown argument: {other}");
                 exit(2);
@@ -89,7 +107,7 @@ fn parse_args() -> Args {
         eprintln!("rust-peer: --addr host:port is required");
         exit(2);
     });
-    Args { role, addr, transport }
+    Args { role, addr, transport, large }
 }
 
 fn run_server<L: ServerTransport>(addr: &str, mut server: Server<L>) {
@@ -179,19 +197,19 @@ fn main() {
     match (args.role.as_str(), args.transport.as_str()) {
         ("server", "tcp") => {
             let listener = TcpListenerTransport::bind(&args.addr).expect("bind the interop address");
-            run_server(&args.addr, Server::new(listener, schema(), Config::default()));
+            run_server(&args.addr, Server::new(listener, schema(args.large), Config::default()));
         }
         ("server", "udp") => {
             let listener = UdpServerTransport::bind(&args.addr).expect("bind the interop address");
-            run_server(&args.addr, Server::new(listener, schema(), Config::default()));
+            run_server(&args.addr, Server::new(listener, schema(args.large), Config::default()));
         }
         ("client", "tcp") => {
             let transport = TcpTransport::connect(&args.addr).expect("connect to the interop address");
-            run_client(&args.addr, Connection::new(transport, schema(), Config::default()));
+            run_client(&args.addr, Connection::new(transport, schema(args.large), Config::default()));
         }
         ("client", "udp") => {
             let transport = UdpTransport::connect(&args.addr).expect("connect to the interop address");
-            run_client(&args.addr, Connection::new(transport, schema(), Config::default()));
+            run_client(&args.addr, Connection::new(transport, schema(args.large), Config::default()));
         }
         (role, transport) => {
             eprintln!(

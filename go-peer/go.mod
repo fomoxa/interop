@@ -1,5 +1,7 @@
 module go-peer
 
-go 1.26.5
+go 1.27.1
 
-require github.com/fomoxa/go v0.0.0-20260824041607-c3acc9052b1f
+require github.com/fomoxa/go v0.1.2
+
+require golang.org/x/sys v0.48.0 // indirect
