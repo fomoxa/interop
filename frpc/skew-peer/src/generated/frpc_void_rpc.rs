@@ -5,7 +5,7 @@
 // codec: rpc
 // fingerprint: sha256:2b58fe10f955c83386b3b377b64aa08e695dc84d012a391c80da151205c7bac4
 // fomoxac-version: 0.2.3
-// generated-at: 2026-11-11T03:18:45Z
+// generated-at: 2026-11-11T03:45:08Z
 
 #![allow(dead_code, unused_imports)]
 
@@ -30,7 +30,8 @@ impl FRpcVoidRpcCodec {
     pub const FINGERPRINT: u64 = 0x2B58FE10F955C833;
 
     /// Writes the `rpc` fields of `value`, in declaration order.
-    pub fn encode(_writer: &mut Writer, _value: &FRpcVoid) {}
+    pub fn encode(_writer: &mut Writer, _value: &FRpcVoid) {
+    }
 
     /// Reads the `rpc` fields into `value`, in declaration order.
     ///
@@ -40,10 +41,7 @@ impl FRpcVoidRpcCodec {
     /// A field the stream ended before takes its zero value (RFC-0002 §9.1);
     /// a field the stream ended *inside* is an error. Bytes left over after
     /// the last field belong to a newer writer's model and are ignored.
-    pub fn decode(
-        _reader: &mut Reader,
-        _value: &mut FRpcVoid,
-    ) -> ::core::result::Result<(), DecodeError> {
+    pub fn decode(_reader: &mut Reader, _value: &mut FRpcVoid) -> ::core::result::Result<(), DecodeError> {
         ::core::result::Result::Ok(())
     }
 }

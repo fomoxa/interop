@@ -2,7 +2,7 @@
 // DO NOT EDIT MANUALLY
 // fingerprint: sha256:a559b3904b818c48bcfd3453d0f35708359e532f1c50585ee25f5f3f9aa263f8
 // fomoxac-version: 0.2.3
-// generated-at: 2026-11-11T03:18:45Z
+// generated-at: 2026-11-11T03:45:08Z
 //
 // Every fingerprint this schema publishes, and the handshake that compares
 // them. Generated - never edit, and never hand-maintain a copy of these
@@ -24,7 +24,10 @@ pub const ECHO_REQUEST_RPC_FINGERPRINT: u64 = 0x508C163AAC3531BD;
 /// fields. The last entry is `ECHO_REQUEST_RPC_FINGERPRINT`. Never sent whole - a peer
 /// sends its field count and its last entry, and the two sides compare at
 /// `min` of the two counts (RFC-0002 §9.1).
-pub const ECHO_REQUEST_RPC_PREFIXES: &[u64] = &[0xD477F0362150CB3D, 0x508C163AAC3531BD];
+pub const ECHO_REQUEST_RPC_PREFIXES: &[u64] = &[
+    0xD477F0362150CB3D,
+    0x508C163AAC3531BD,
+];
 
 /// `EchoResponse`, as declared - every annotated field, whatever codec it joined.
 pub const ECHO_RESPONSE_FINGERPRINT: u64 = 0x53AE11C4D04C68E1;
@@ -35,7 +38,9 @@ pub const ECHO_RESPONSE_RPC_FINGERPRINT: u64 = 0x23368E8A5E0FCA18;
 /// fields. The last entry is `ECHO_RESPONSE_RPC_FINGERPRINT`. Never sent whole - a peer
 /// sends its field count and its last entry, and the two sides compare at
 /// `min` of the two counts (RFC-0002 §9.1).
-pub const ECHO_RESPONSE_RPC_PREFIXES: &[u64] = &[0x23368E8A5E0FCA18];
+pub const ECHO_RESPONSE_RPC_PREFIXES: &[u64] = &[
+    0x23368E8A5E0FCA18,
+];
 
 /// `FRpcError`, as declared - every annotated field, whatever codec it joined.
 pub const FRPC_ERROR_FINGERPRINT: u64 = 0x2D983E2470F35222;
@@ -46,7 +51,10 @@ pub const FRPC_ERROR_RPC_FINGERPRINT: u64 = 0x4A043B62FDC0E07D;
 /// fields. The last entry is `FRPC_ERROR_RPC_FINGERPRINT`. Never sent whole - a peer
 /// sends its field count and its last entry, and the two sides compare at
 /// `min` of the two counts (RFC-0002 §9.1).
-pub const FRPC_ERROR_RPC_PREFIXES: &[u64] = &[0xA58EA55F6A679084, 0x4A043B62FDC0E07D];
+pub const FRPC_ERROR_RPC_PREFIXES: &[u64] = &[
+    0xA58EA55F6A679084,
+    0x4A043B62FDC0E07D,
+];
 
 /// `FRpcVoid`, as declared - every annotated field, whatever codec it joined.
 pub const FRPC_VOID_FINGERPRINT: u64 = 0xCD48EE6983D59C6F;
@@ -57,7 +65,8 @@ pub const FRPC_VOID_RPC_FINGERPRINT: u64 = 0x2B58FE10F955C833;
 /// fields. The last entry is `FRPC_VOID_RPC_FINGERPRINT`. Never sent whole - a peer
 /// sends its field count and its last entry, and the two sides compare at
 /// `min` of the two counts (RFC-0002 §9.1).
-pub const FRPC_VOID_RPC_PREFIXES: &[u64] = &[];
+pub const FRPC_VOID_RPC_PREFIXES: &[u64] = &[
+];
 
 /// One message: its id, its name, and the fingerprint of its wire contract.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -78,30 +87,10 @@ pub struct FomoxaMessage {
 /// Every message this schema declares, sorted by id.
 #[allow(dead_code)]
 pub const FOMOXA_MESSAGES: &[FomoxaMessage] = &[
-    FomoxaMessage {
-        id: ECHO_REQUEST_RPC_MESSAGE_ID,
-        name: "EchoRequest.rpc",
-        fingerprint: ECHO_REQUEST_RPC_FINGERPRINT,
-        prefixes: ECHO_REQUEST_RPC_PREFIXES,
-    },
-    FomoxaMessage {
-        id: ECHO_RESPONSE_RPC_MESSAGE_ID,
-        name: "EchoResponse.rpc",
-        fingerprint: ECHO_RESPONSE_RPC_FINGERPRINT,
-        prefixes: ECHO_RESPONSE_RPC_PREFIXES,
-    },
-    FomoxaMessage {
-        id: FRPC_ERROR_RPC_MESSAGE_ID,
-        name: "FRpcError.rpc",
-        fingerprint: FRPC_ERROR_RPC_FINGERPRINT,
-        prefixes: FRPC_ERROR_RPC_PREFIXES,
-    },
-    FomoxaMessage {
-        id: FRPC_VOID_RPC_MESSAGE_ID,
-        name: "FRpcVoid.rpc",
-        fingerprint: FRPC_VOID_RPC_FINGERPRINT,
-        prefixes: FRPC_VOID_RPC_PREFIXES,
-    },
+    FomoxaMessage { id: ECHO_REQUEST_RPC_MESSAGE_ID, name: "EchoRequest.rpc", fingerprint: ECHO_REQUEST_RPC_FINGERPRINT, prefixes: ECHO_REQUEST_RPC_PREFIXES },
+    FomoxaMessage { id: ECHO_RESPONSE_RPC_MESSAGE_ID, name: "EchoResponse.rpc", fingerprint: ECHO_RESPONSE_RPC_FINGERPRINT, prefixes: ECHO_RESPONSE_RPC_PREFIXES },
+    FomoxaMessage { id: FRPC_ERROR_RPC_MESSAGE_ID, name: "FRpcError.rpc", fingerprint: FRPC_ERROR_RPC_FINGERPRINT, prefixes: FRPC_ERROR_RPC_PREFIXES },
+    FomoxaMessage { id: FRPC_VOID_RPC_MESSAGE_ID, name: "FRpcVoid.rpc", fingerprint: FRPC_VOID_RPC_FINGERPRINT, prefixes: FRPC_VOID_RPC_PREFIXES },
 ];
 
 /// What a peer's fingerprints mean for this one.

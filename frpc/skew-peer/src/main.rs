@@ -1,4 +1,10 @@
-mod generated;
+macro_rules! mount_the_generated_tree {
+    () => {
+        mod generated;
+    };
+}
+
+mount_the_generated_tree!();
 mod models;
 
 use std::io::{Read, Write as _};
