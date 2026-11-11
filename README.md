@@ -97,8 +97,7 @@ The root `run.sh` and the pairing logic need no change, because peers are discov
 |---|---|---|
 | `frpc/rust-peer` | `examples/interop.rs` and `examples/demo` of frpc-rust, copied (see `SOURCE`) | `fomoxa-rpc` 0.1.0 from crates.io |
 | `frpc/csharp-peer` | `examples/Demo` and `examples/Interop/Program.cs` of frpc-csharp, copied (see `SOURCE`) | `Fomoxa.Rpc` 0.1.0 and `Fomoxa.Attributes` 0.1.0 from NuGet |
-| `frpc/go-peer` | `cmd/frpc-interop` of frpc-go, copied | `github.com/fomoxa/frpc-go` v0.1.0, whose `examples/demo` package it imports |
-| `frpc/skew-peer` | written here, with `EchoRequest` carrying one appended field | `github.com/fomoxa/frpc-go` v0.1.0 |
+| `frpc/skew-peer` | written here in Rust, with `EchoRequest` carrying one appended field | `fomoxa-rpc` 0.1.0 from crates.io |
 
 Every fRPC peer accepts:
 
@@ -116,8 +115,7 @@ run.sh say <host:port> <text>   call Echo.Say once and print the reply
 ```sh
 (cd frpc/rust-peer && cargo build --release)
 (cd frpc/csharp-peer && dotnet build -c Release)
-(cd frpc/go-peer && go build -o frpc-go-peer .)
-(cd frpc/skew-peer && go build -o frpc-skew-peer .)
+(cd frpc/skew-peer && cargo build --release)
 frpc/matrix.sh
 ```
 

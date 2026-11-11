@@ -1,2 +1,2 @@
-src = "models"
-out = "generated"
+src = "src"
+out = "src/generated"

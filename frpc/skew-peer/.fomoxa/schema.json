@@ -5,21 +5,21 @@
   "fingerprint_u64": "0xA559B3904B818C48",
   "models": {
     "EchoRequest": {
-      "source": "models/models.go",
+      "source": "src/models/echo.rs",
       "fingerprint": "sha256:463ade92881e693b08eb1500075e3158638dba6c63161e2c954e1dc07dbb79f1",
       "codecs": [
         "rpc"
       ],
       "fields": [
         {
-          "name": "Text",
+          "name": "text",
           "type": "string",
           "codecs": [
             "rpc"
           ]
         },
         {
-          "name": "Loud",
+          "name": "loud",
           "type": "bool",
           "codecs": [
             "rpc"
@@ -41,11 +41,11 @@
           ],
           "fields": [
             {
-              "name": "Text",
+              "name": "text",
               "type": "string"
             },
             {
-              "name": "Loud",
+              "name": "loud",
               "type": "bool"
             }
           ]
@@ -53,14 +53,14 @@
       }
     },
     "EchoResponse": {
-      "source": "models/models.go",
+      "source": "src/models/echo.rs",
       "fingerprint": "sha256:53ae11c4d04c68e19287fdfcc825ebffa309e1dbf2bdf966b8b643d553dd7f69",
       "codecs": [
         "rpc"
       ],
       "fields": [
         {
-          "name": "Text",
+          "name": "text",
           "type": "string",
           "codecs": [
             "rpc"
@@ -80,7 +80,7 @@
           ],
           "fields": [
             {
-              "name": "Text",
+              "name": "text",
               "type": "string"
             }
           ]
@@ -88,21 +88,21 @@
       }
     },
     "FRpcError": {
-      "source": "models/models.go",
+      "source": "src/models/frpc.rs",
       "fingerprint": "sha256:2d983e2470f3522292020f8bcb70f3b2dfd752f32af58ce8c87c673800c8f495",
       "codecs": [
         "rpc"
       ],
       "fields": [
         {
-          "name": "Code",
+          "name": "code",
           "type": "u32",
           "codecs": [
             "rpc"
           ]
         },
         {
-          "name": "Message",
+          "name": "message",
           "type": "string",
           "codecs": [
             "rpc"
@@ -124,11 +124,11 @@
           ],
           "fields": [
             {
-              "name": "Code",
+              "name": "code",
               "type": "u32"
             },
             {
-              "name": "Message",
+              "name": "message",
               "type": "string"
             }
           ]
@@ -136,7 +136,7 @@
       }
     },
     "FRpcVoid": {
-      "source": "models/models.go",
+      "source": "src/models/frpc.rs",
       "fingerprint": "sha256:cd48ee6983d59c6f5f7cfd3f3b2ec2a8c4a0f66c30e22bec805204acdb8bc9a3",
       "codecs": [
         "rpc"

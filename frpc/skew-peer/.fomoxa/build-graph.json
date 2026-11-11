@@ -4,55 +4,66 @@
   "schema_fingerprint": "sha256:a559b3904b818c48bcfd3453d0f35708359e532f1c50585ee25f5f3f9aa263f8",
   "sha256_of": "each file with its `// generated-at:` line emptied, so an unchanged schema keeps an unchanged digest",
   "sources": {
-    "models/models.go": {
+    "src/models/echo.rs": {
       "models": [
         "EchoRequest",
-        "EchoResponse",
+        "EchoResponse"
+      ],
+      "outputs": [
+        {
+          "path": "src/generated/echo_request_rpc.rs",
+          "model": "EchoRequest",
+          "codec": "rpc",
+          "fingerprint": "sha256:508c163aac3531bdf616e4debec3f5583c0498e46e5913fcce9021d7016afa31",
+          "sha256": "ebcb0751497943543fa90a2ae57be7ffb7e1710c497e4ea6135e141cdf3a49fb"
+        },
+        {
+          "path": "src/generated/echo_response_rpc.rs",
+          "model": "EchoResponse",
+          "codec": "rpc",
+          "fingerprint": "sha256:23368e8a5e0fca18ae512e3211b9d07a72688126005acf37265ad37b659f65c6",
+          "sha256": "1919f8b2039fd8424855c6d5ad27d26c75ba10ecca85a7f4c867b535e8e2cff8"
+        }
+      ]
+    },
+    "src/models/frpc.rs": {
+      "models": [
         "FRpcError",
         "FRpcVoid"
       ],
       "outputs": [
         {
-          "path": "generated/echo_request_rpc.go",
-          "model": "EchoRequest",
-          "codec": "rpc",
-          "fingerprint": "sha256:508c163aac3531bdf616e4debec3f5583c0498e46e5913fcce9021d7016afa31",
-          "sha256": "3e1d3b52da1a141f00e9dc38622965bdfe043fb2ddfc7948660c1b91f7ada2e4"
-        },
-        {
-          "path": "generated/echo_response_rpc.go",
-          "model": "EchoResponse",
-          "codec": "rpc",
-          "fingerprint": "sha256:23368e8a5e0fca18ae512e3211b9d07a72688126005acf37265ad37b659f65c6",
-          "sha256": "1c314859e081161ab4a8e793620e2ecb0f80e6201ccdbb02ccac3323357d6d3c"
-        },
-        {
-          "path": "generated/frpc_error_rpc.go",
+          "path": "src/generated/frpc_error_rpc.rs",
           "model": "FRpcError",
           "codec": "rpc",
           "fingerprint": "sha256:4a043b62fdc0e07d53f42ccb409dc3546203f648269e7c4ec534f4475e3ddd7a",
-          "sha256": "c0bfeaa269f4c2d711051e26867bd8dbaa9a1e7421cdb2d1624e0fdca22e1e87"
+          "sha256": "650937e581333046501db0420be5fb42873a0bb80f6d2afca89a9ecc9984d415"
         },
         {
-          "path": "generated/frpc_void_rpc.go",
+          "path": "src/generated/frpc_void_rpc.rs",
           "model": "FRpcVoid",
           "codec": "rpc",
           "fingerprint": "sha256:2b58fe10f955c83386b3b377b64aa08e695dc84d012a391c80da151205c7bac4",
-          "sha256": "0729b1480dbb47188682f2b8be25b189a31324defa6cc87549f0e99e4a474bcc"
+          "sha256": "e353fb1f01daf232fbfedfcb5d0ab94b31fae831291d53875579b2af4ac81ea3"
         }
       ]
     }
   },
   "shared": [
     {
-      "path": "generated/runtime.go",
+      "path": "src/generated/runtime.rs",
       "kind": "runtime",
-      "sha256": "9dc47cc583739b522c819bbb10e5520e2cfc94eb6e01d5870365761a67aca48f"
+      "sha256": "7912a0ef49061dbc119c67a136dc500180aa1bb6711ef22e6abab89f7d3acd55"
     },
     {
-      "path": "generated/handshake.go",
+      "path": "src/generated/handshake.rs",
       "kind": "handshake",
-      "sha256": "c013ce35b5dc163c839f353ca974f4baf2a4d064cb649f070fc8fcd4e1d62e3c"
+      "sha256": "97c95d78e086f5e77d8b16c3f3f640f105c84ff297c1b97739eb4d35b2295f7c"
+    },
+    {
+      "path": "src/generated/mod.rs",
+      "kind": "root",
+      "sha256": "3d96417af4d831a3d582137318d2615befa354103b7d70c3f33a9a69de6d0fcf"
     }
   ]
 }

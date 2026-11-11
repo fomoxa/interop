@@ -112,13 +112,9 @@ jobs:
         working-directory: frpc/csharp-peer
         run: dotnet build -c Release
 
-      - name: build frpc/go-peer
-        working-directory: frpc/go-peer
-        run: go build -o frpc-go-peer .
-
       - name: build frpc/skew-peer
         working-directory: frpc/skew-peer
-        run: go build -o frpc-skew-peer .
+        run: cargo build --release
 
       - name: run the fRPC matrix
         run: frpc/matrix.sh
