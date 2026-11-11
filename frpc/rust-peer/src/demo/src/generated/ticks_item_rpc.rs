@@ -4,8 +4,8 @@
 // model: TicksItem
 // codec: rpc
 // fingerprint: sha256:820ba1c0fdacdcfceb5c0e8181bcf46ce3ef73304d24e2c0e5ec7a0d750dd839
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 

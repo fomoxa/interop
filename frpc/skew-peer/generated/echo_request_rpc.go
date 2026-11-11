@@ -4,8 +4,8 @@
 // model: EchoRequest
 // codec: rpc
 // fingerprint: sha256:508c163aac3531bdf616e4debec3f5583c0498e46e5913fcce9021d7016afa31
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T17:12:45Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:12Z
 
 package generated
 
@@ -51,7 +51,7 @@ func (EchoRequestRpcCodec) Decode(r *Reader, value *models.EchoRequest) error {
 	if r.FieldAbsent() {
 		value.Text = ""
 	} else {
-		value.Text, err = r.ReadString()
+		err = r.ReadStringInto(&value.Text)
 		if err != nil {
 			return err
 		}

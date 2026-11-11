@@ -4,8 +4,8 @@
 // model: FRpcVoid
 // codec: rpc
 // fingerprint: sha256:2b58fe10f955c83386b3b377b64aa08e695dc84d012a391c80da151205c7bac4
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T17:12:45Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:12Z
 
 package generated
 

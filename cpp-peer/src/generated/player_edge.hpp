@@ -4,8 +4,8 @@
 // model: Player
 // codec: edge
 // fingerprint: sha256:19d8f679a9bb419fad6a11350c111bf9616b8f2e3bf281fb5c9be837216ca2fa
-// fomoxac-version: 0.2.0
-// generated-at: 2026-08-24T07:06:56Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:12Z
 
 #pragma once
 

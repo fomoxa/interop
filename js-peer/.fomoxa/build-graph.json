@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generator": "fomoxac 0.2.0",
+  "generator": "fomoxac 0.2.3",
   "schema_fingerprint": "sha256:7791a1ae074fd09c99ba9e085b6b25c5d14df739d5b73db2d353d761029f5ebc",
   "sha256_of": "each file with its `// generated-at:` line emptied, so an unchanged schema keeps an unchanged digest",
   "sources": {
@@ -14,7 +14,7 @@
           "model": "Player",
           "codec": "edge",
           "fingerprint": "sha256:19d8f679a9bb419fad6a11350c111bf9616b8f2e3bf281fb5c9be837216ca2fa",
-          "sha256": "ff252cc2ee4b7fe576120795521f87dae730157d40d885e72f917bc4849ed116"
+          "sha256": "82e91b349c54f6f7582b732b43c3bc7b4e4405a496bcdd267cecef75fcdc5db5"
         }
       ]
     }
@@ -23,12 +23,12 @@
     {
       "path": "src/generated/runtime.js",
       "kind": "runtime",
-      "sha256": "6ffe6116502092b2c65bd4640527cd9ec4a80cc23df51e57470e7e2e894fa4be"
+      "sha256": "11e5fea52f4d570d36cb0b8a181138c2cb1cfbb1b50f4108335f686ed1a8802d"
     },
     {
       "path": "src/generated/handshake.js",
       "kind": "handshake",
-      "sha256": "794d7e2a8f6e0f0ef403254f44a0fd19706f69eb7889f675d5ef353760d675f3"
+      "sha256": "445e29837413b4cdcbdc5e574a41b1c6870843cd8f0a736b32f4b1773f4ecbef"
     }
   ]
 }

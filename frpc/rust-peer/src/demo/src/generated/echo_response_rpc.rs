@@ -4,8 +4,8 @@
 // model: EchoResponse
 // codec: rpc
 // fingerprint: sha256:23368e8a5e0fca18ae512e3211b9d07a72688126005acf37265ad37b659f65c6
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 
@@ -45,7 +45,7 @@ impl EchoResponseRpcCodec {
     /// a field the stream ended *inside* is an error. Bytes left over after
     /// the last field belong to a newer writer's model and are ignored.
     pub fn decode(reader: &mut Reader, value: &mut EchoResponse) -> ::core::result::Result<(), DecodeError> {
-        value.text = if reader.field_absent() { ::std::string::String::new() } else { reader.read_string()? };
+        if reader.field_absent() { value.text.clear(); } else { reader.read_string_into(&mut value.text)?; }
         ::core::result::Result::Ok(())
     }
 }

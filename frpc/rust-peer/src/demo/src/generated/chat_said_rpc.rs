@@ -4,8 +4,8 @@
 // model: ChatSaid
 // codec: rpc
 // fingerprint: sha256:e1399a587a239b43b32cfd6aa5bd437754c290903c3a670e7cef70aaa63383f9
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 
@@ -45,7 +45,7 @@ impl ChatSaidRpcCodec {
     /// a field the stream ended *inside* is an error. Bytes left over after
     /// the last field belong to a newer writer's model and are ignored.
     pub fn decode(reader: &mut Reader, value: &mut ChatSaid) -> ::core::result::Result<(), DecodeError> {
-        value.line = if reader.field_absent() { ::std::string::String::new() } else { reader.read_string()? };
+        if reader.field_absent() { value.line.clear(); } else { reader.read_string_into(&mut value.line)?; }
         ::core::result::Result::Ok(())
     }
 }

@@ -4,8 +4,8 @@
 // model: FRpcCtx
 // codec: rpc
 // fingerprint: sha256:3b43f47205e0362dd2beda675e13a4f52cb4f67e036b6998517c698c4f9079c0
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 
@@ -58,11 +58,11 @@ impl FRpcCtxRpcCodec {
     /// the last field belong to a newer writer's model and are ignored.
     pub fn decode(reader: &mut Reader, value: &mut FRpcCtx) -> ::core::result::Result<(), DecodeError> {
         value.deadline_ms = if reader.field_absent() { 0u32 } else { reader.read_u32()? };
-        value.trace_id = if reader.field_absent() { ::std::vec::Vec::new() } else { reader.read_bytes()? };
-        value.span_id = if reader.field_absent() { ::std::vec::Vec::new() } else { reader.read_bytes()? };
-        value.token = if reader.field_absent() { ::std::string::String::new() } else { reader.read_string()? };
-        value.tenant = if reader.field_absent() { ::std::string::String::new() } else { reader.read_string()? };
-        value.idempotency_key = if reader.field_absent() { ::std::vec::Vec::new() } else { reader.read_bytes()? };
+        if reader.field_absent() { value.trace_id.clear(); } else { reader.read_bytes_into(&mut value.trace_id)?; }
+        if reader.field_absent() { value.span_id.clear(); } else { reader.read_bytes_into(&mut value.span_id)?; }
+        if reader.field_absent() { value.token.clear(); } else { reader.read_string_into(&mut value.token)?; }
+        if reader.field_absent() { value.tenant.clear(); } else { reader.read_string_into(&mut value.tenant)?; }
+        if reader.field_absent() { value.idempotency_key.clear(); } else { reader.read_bytes_into(&mut value.idempotency_key)?; }
         value.initial_credit = if reader.field_absent() { 0u32 } else { reader.read_u32()? };
         ::core::result::Result::Ok(())
     }

@@ -4,8 +4,8 @@
 // model: FRpcError
 // codec: rpc
 // fingerprint: sha256:4a043b62fdc0e07d53f42ccb409dc3546203f648269e7c4ec534f4475e3ddd7a
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T17:12:45Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:12Z
 
 package generated
 
@@ -59,7 +59,7 @@ func (FRpcErrorRpcCodec) Decode(r *Reader, value *models.FRpcError) error {
 	if r.FieldAbsent() {
 		value.Message = ""
 	} else {
-		value.Message, err = r.ReadString()
+		err = r.ReadStringInto(&value.Message)
 		if err != nil {
 			return err
 		}

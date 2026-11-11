@@ -29,7 +29,7 @@ jobs:
           node-version: "22"
 
       - name: install fomoxac
-        run: cargo install fomoxac --version 0.2.1 --locked
+        run: cargo install fomoxac --version 0.2.3 --locked
 
       # Every peer's src/generated/ is committed, the same convention
       # fomoxac's own fixtures use - this fails fast if a model changed and

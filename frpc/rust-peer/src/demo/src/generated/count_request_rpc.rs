@@ -4,8 +4,8 @@
 // model: CountRequest
 // codec: rpc
 // fingerprint: sha256:12d24dcf758a97691a2e0bfce184b8dc0ef21a8e17a61878efb345ffaefdc671
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 

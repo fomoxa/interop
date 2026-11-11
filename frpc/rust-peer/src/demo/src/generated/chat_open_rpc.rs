@@ -4,8 +4,8 @@
 // model: ChatOpen
 // codec: rpc
 // fingerprint: sha256:3d4af6b9c83e293bda2e98baab650b19b9e40a3fedb38dd5e75f0153e7c8acae
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 
@@ -45,7 +45,7 @@ impl ChatOpenRpcCodec {
     /// a field the stream ended *inside* is an error. Bytes left over after
     /// the last field belong to a newer writer's model and are ignored.
     pub fn decode(reader: &mut Reader, value: &mut ChatOpen) -> ::core::result::Result<(), DecodeError> {
-        value.room = if reader.field_absent() { ::std::string::String::new() } else { reader.read_string()? };
+        if reader.field_absent() { value.room.clear(); } else { reader.read_string_into(&mut value.room)?; }
         ::core::result::Result::Ok(())
     }
 }

@@ -4,8 +4,8 @@
 // model: UploadChunk
 // codec: rpc
 // fingerprint: sha256:b28344e68b53bab60d7994e3ceb903891ff99bd245e462d6d5b6cf05be4a5fa1
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 

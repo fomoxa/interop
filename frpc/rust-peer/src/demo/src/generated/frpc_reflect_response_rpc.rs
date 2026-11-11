@@ -4,8 +4,8 @@
 // model: FRpcReflectResponse
 // codec: rpc
 // fingerprint: sha256:2a2c539fd24d8b443f75c1c37977c3bc8fd0d8cffb35f3920e59b206721dae40
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T09:08:38Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 
@@ -53,14 +53,18 @@ impl FRpcReflectResponseRpcCodec {
     /// the last field belong to a newer writer's model and are ignored.
     pub fn decode(reader: &mut Reader, value: &mut FRpcReflectResponse) -> ::core::result::Result<(), DecodeError> {
         {
-            let count = if reader.field_absent() { 0 } else { reader.read_array_count()? };
-            let mut elements = ::std::vec::Vec::with_capacity(count.min(4096));
-            for _ in 0..count {
-                elements.push({ let mut element = <FRpcMethodInfo as ::core::default::Default>::default(); FRpcMethodInfoRpcCodec::decode(reader, &mut element)?; element });
+            let count0 = if reader.field_absent() { 0 } else { reader.read_array_count()? };
+            let elements0 = &mut value.methods;
+            elements0.truncate(count0);
+            elements0.reserve(count0.min(4096).saturating_sub(elements0.len()));
+            for index0 in 0..count0 {
+                if index0 == elements0.len() {
+                    elements0.push(::core::default::Default::default());
+                }
+                FRpcMethodInfoRpcCodec::decode(reader, &mut elements0[index0])?;
             }
-            value.methods = elements;
         }
-        value.schema_json = if reader.field_absent() { ::std::vec::Vec::new() } else { reader.read_bytes()? };
+        if reader.field_absent() { value.schema_json.clear(); } else { reader.read_bytes_into(&mut value.schema_json)?; }
         ::core::result::Result::Ok(())
     }
 }

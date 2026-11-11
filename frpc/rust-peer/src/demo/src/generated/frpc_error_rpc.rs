@@ -4,8 +4,8 @@
 // model: FRpcError
 // codec: rpc
 // fingerprint: sha256:4a043b62fdc0e07d53f42ccb409dc3546203f648269e7c4ec534f4475e3ddd7a
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 
@@ -48,7 +48,7 @@ impl FRpcErrorRpcCodec {
     /// the last field belong to a newer writer's model and are ignored.
     pub fn decode(reader: &mut Reader, value: &mut FRpcError) -> ::core::result::Result<(), DecodeError> {
         value.code = if reader.field_absent() { 0u32 } else { reader.read_u32()? };
-        value.message = if reader.field_absent() { ::std::string::String::new() } else { reader.read_string()? };
+        if reader.field_absent() { value.message.clear(); } else { reader.read_string_into(&mut value.message)?; }
         ::core::result::Result::Ok(())
     }
 }

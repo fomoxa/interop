@@ -4,8 +4,8 @@
 // model: UploadDone
 // codec: rpc
 // fingerprint: sha256:7a9cb5b5480d918afa550b19854ea0910b843dd133dcc9322a7586fa16e79fbe
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 
@@ -45,7 +45,7 @@ impl UploadDoneRpcCodec {
     /// a field the stream ended *inside* is an error. Bytes left over after
     /// the last field belong to a newer writer's model and are ignored.
     pub fn decode(reader: &mut Reader, value: &mut UploadDone) -> ::core::result::Result<(), DecodeError> {
-        value.summary = if reader.field_absent() { ::std::string::String::new() } else { reader.read_string()? };
+        if reader.field_absent() { value.summary.clear(); } else { reader.read_string_into(&mut value.summary)?; }
         ::core::result::Result::Ok(())
     }
 }

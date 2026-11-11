@@ -4,8 +4,8 @@
 // model: CountItem
 // codec: rpc
 // fingerprint: sha256:a3a551bbfcf90a6c4c485d1dc4aed65525dc983eb0e1013fad1b71b69fa68996
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 

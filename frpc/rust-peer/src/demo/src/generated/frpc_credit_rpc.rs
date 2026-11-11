@@ -4,8 +4,8 @@
 // model: FRpcCredit
 // codec: rpc
 // fingerprint: sha256:9f3d9aee476f42bdd8ea725b429837c5ebb3a5436604550c2a925ac1cfeb85f4
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T03:22:37Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 

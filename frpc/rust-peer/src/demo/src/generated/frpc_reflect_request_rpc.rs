@@ -4,8 +4,8 @@
 // model: FRpcReflectRequest
 // codec: rpc
 // fingerprint: sha256:aaab56b8165c245bb6a314205af049d2bafa54983caf25caa8f0c7b8ccff8f71
-// fomoxac-version: 0.2.1
-// generated-at: 2026-09-21T09:08:38Z
+// fomoxac-version: 0.2.3
+// generated-at: 2026-11-11T02:08:27Z
 
 #![allow(dead_code, unused_imports)]
 
